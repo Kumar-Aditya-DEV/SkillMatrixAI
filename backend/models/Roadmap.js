@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const RoadmapSchema = new mongoose.Schema({
   candidateId: {
     type: mongoose.Schema.Types.ObjectId,

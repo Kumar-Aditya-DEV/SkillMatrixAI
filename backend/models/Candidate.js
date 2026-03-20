@@ -16,24 +16,38 @@ const candidateSchema = new mongoose.Schema({
   },
   roleApplied: {
     type: String,
-    required: [true, 'Please provide applied role']
+    default: 'Unspecified'
   },
   matchScore: {
-    type: Number, // Percentage 0-100
-    required: true,
+    type: Number,
+    default: 0,
     min: 0,
     max: 100
   },
   status: {
     type: String,
-    enum: ['IN REVIEW', 'IN TRAINING', 'APPROVED', 'COMPLETED'],
-    default: 'IN REVIEW'
+    enum: ['PENDING', 'IN REVIEW', 'IN_PROGRESS', 'IN TRAINING', 'APPROVED', 'REJECTED', 'COMPLETED'],
+    default: 'PENDING'
   },
+  statusHistory: [
+    {
+      status: String,
+      date: { type: Date, default: Date.now }
+    }
+  ],
   resumePath: {
     type: String
   },
   aiInsight: {
     type: String
+  },
+  assignedTrainer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  roadmapId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Roadmap'
   }
 }, { timestamps: true });
 
