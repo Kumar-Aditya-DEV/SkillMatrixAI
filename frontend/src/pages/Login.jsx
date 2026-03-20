@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const navigate = useNavigate();
   return (
     <main className="flex min-h-screen flex-col md:flex-row">
       {/* Left Section: Branding */}
@@ -86,6 +88,7 @@ function Login() {
               <button 
                 className="w-full py-4 rounded-xl font-bold text-on-primary bg-gradient-to-r from-primary to-primary-container hover:shadow-[0_0_20px_rgba(128,131,255,0.4)] transition-all active:scale-[0.98] duration-200" 
                 type="submit"
+                onClick={() => navigate('/hr-dashboard')}
               >
                 Login to Dashboard
               </button>
@@ -119,7 +122,7 @@ function Login() {
             <div className="mt-8 text-center">
               <p className="text-on-surface-variant text-sm font-medium">
                 Don't have an account? 
-                <a className="text-primary font-bold hover:underline underline-offset-4 ml-1" href="#">Sign up</a>
+                <button type="button" onClick={() => navigate('/register')} className="text-primary font-bold hover:underline underline-offset-4 ml-1">Sign up</button>
               </p>
             </div>
           </div>

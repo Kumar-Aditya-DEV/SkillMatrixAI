@@ -11,6 +11,7 @@ import TrainerDashboard from './pages/TrainerDashboard';
 import RoadmapReview from './pages/RoadmapReview';
 import Candidates from './pages/Candidates';
 import CandidateDetail from './pages/CandidateDetail';
+import Register from './pages/Register';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -50,6 +51,7 @@ function App() {
         <Route path="/roadmap-review" element={<RoadmapReview />} />
         <Route path="/candidates" element={<Candidates />} />
         <Route path="/candidate-detail" element={<CandidateDetail />} />
+        <Route path="/register" element={<Register />} />
         
         {/* Add more dashboard routes here */}
       </Routes>
