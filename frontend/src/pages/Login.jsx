@@ -1,130 +1,122 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Default to HR if no specific role selected via buttons
+    navigate('/hr/upload');
+  };
+
   return (
-    <main className="flex min-h-screen flex-col md:flex-row">
-      {/* Left Section: Branding */}
-      <section className="hidden md:flex flex-1 relative overflow-hidden bg-gradient-brand items-center justify-center p-12">
-        {/* Decorative Elements */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-white rounded-full blur-[120px]"></div>
-          <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-secondary-container rounded-full blur-[150px]"></div>
+    <main className="flex min-h-screen flex-col md:flex-row bg-[#0b1326] font-['Inter']">
+      {/* Left Section: Branding & Hero */}
+      <section className="hidden md:flex flex-1 relative overflow-hidden bg-[#131b2e] items-center justify-center p-16 border-r border-white/5">
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-primary rounded-full blur-[150px]"></div>
+          <div className="absolute bottom-[-20%] right-[-10%] w-[800px] h-[800px] bg-secondary rounded-full blur-[180px]"></div>
         </div>
-        <div className="relative z-10 max-w-xl text-center md:text-left">
-          <h1 className="text-display-lg text-white font-black tracking-tighter leading-none mb-6 text-glow" style={{ fontSize: '3.5rem', letterSpacing: '-0.02em' }}>
+        
+        <div className="relative z-10 max-w-xl w-full text-center">
+          <div className="mb-12 flex justify-center">
+             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-2xl">
+                <span className="material-symbols-outlined text-on-primary text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>electric_bolt</span>
+             </div>
+          </div>
+          <h1 className="text-7xl font-black text-white tracking-tighter leading-none mb-8">
             SkillPath AI
           </h1>
-          <p className="text-xl text-primary-fixed opacity-90 font-light max-w-md leading-relaxed mb-12">
-            Intelligent Workforce Onboarding Platform for the future of digital skills.
+          <p className="text-xl text-slate-400 font-medium leading-relaxed mb-16 max-w-lg mx-auto">
+            The intelligent engine for workforce transition and adaptive skills orchestration.
           </p>
-          {/* Abstract Illustration */}
-          <div className="relative w-full aspect-square max-w-md mx-auto md:mx-0 group">
-            <div className="absolute inset-0 bg-surface-container-highest/20 rounded-2xl backdrop-blur-sm border border-white/10 rotate-3 transition-transform group-hover:rotate-0 duration-700"></div>
+          
+          <div className="relative group w-full aspect-video rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
             <img 
-              alt="Abstract neural network visualization" 
-              className="relative z-10 w-full h-full object-cover rounded-2xl shadow-2xl transition-transform group-hover:-translate-y-2 duration-700"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDKJTK3_3mOBSBlWCcgRhQXZvUMHk5p3IRgoTwTxbxIo461QTzq7XIQJlVKRhzHQ8eQeEgNZpApFNrrTRUiYgIKhY3UxJJJx05z2TlbFxLa-KuqPGZpyu5ltzft2ciIjgngLsrYWkuuTBnPO89zjRLk16_LaSd1UDLKwdsYAOfb6584pZdVNatWSdM-nPyY1WbjtTFTmMj1q6D9tk0fms-O7u7xWznUhCCuEaBK8TdVmxYDmxtz-l3jjnr170To1pGisd4za4B5A" 
+              src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600" 
+              alt="AI Hero" 
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0b1326] via-transparent to-transparent"></div>
           </div>
         </div>
       </section>
 
       {/* Right Section: Login Form */}
-      <section className="flex-1 flex items-center justify-center p-6 sm:p-12 bg-surface">
-        <div className="w-full max-w-[480px] space-y-8">
-          {/* Login Card */}
-          <div className="glass-panel p-8 sm:p-10 rounded-2xl shadow-2xl border border-outline-variant/15">
-            <div className="mb-10 text-center md:text-left">
-              <h2 className="text-3xl font-bold text-on-surface tracking-tight mb-2">Welcome Back</h2>
-              <p className="text-on-surface-variant font-medium">Access your curated learning journey.</p>
+      <section className="flex-1 flex items-center justify-center p-8 sm:p-16 bg-[#0b1326]">
+        <div className="w-full max-w-[440px]">
+          <div className="mb-12">
+            <h2 className="text-4xl font-black text-white tracking-tight mb-3">Portal Login</h2>
+            <p className="text-lg text-slate-500 font-medium">Enter your credentials to access your dashboard.</p>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Work Email</label>
+              <input 
+                type="email" 
+                placeholder="name@skillpath.ai"
+                className="w-full bg-[#1a2236] border border-white/10 rounded-2xl p-5 text-white placeholder-slate-600 focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-              {/* Role Selection */}
-              <div className="space-y-2">
-                <label className="block text-[11px] uppercase tracking-[0.05em] font-bold text-primary">Access Role</label>
-                <div className="relative group">
-                  <select className="w-full appearance-none bg-surface-container-low border-none rounded-xl py-4 px-5 text-on-surface focus:ring-2 focus:ring-primary-container transition-all cursor-pointer">
-                    <option>Senior Developer</option>
-                    <option>HR Manager</option>
-                    <option>Technical Trainer</option>
-                  </select>
-                  <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
-                </div>
-              </div>
-              {/* Email */}
-              <div className="space-y-2">
-                <label className="block text-[11px] uppercase tracking-[0.05em] font-bold text-primary">Email Address</label>
-                <input 
-                  className="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 text-on-surface placeholder:text-outline-variant focus:ring-2 focus:ring-primary-container transition-all" 
-                  placeholder="name@company.com" 
-                  type="email" 
-                />
-              </div>
-              {/* Password */}
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <label className="block text-[11px] uppercase tracking-[0.05em] font-bold text-primary">Password</label>
-                  <a className="text-[11px] uppercase tracking-[0.05em] font-bold text-on-surface-variant hover:text-primary transition-colors" href="#">Forgot Password?</a>
-                </div>
-                <div className="relative">
-                  <input 
-                    className="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 text-on-surface placeholder:text-outline-variant focus:ring-2 focus:ring-primary-container transition-all" 
-                    placeholder="••••••••" 
-                    type="password" 
-                  />
-                  <button className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface" data-icon="visibility" type="button">
-                    visibility
-                  </button>
-                </div>
-              </div>
-              {/* Remember Me */}
-              <label className="flex items-center gap-3 cursor-pointer group">
-                <input className="w-5 h-5 rounded border-none bg-surface-container-low text-primary-container focus:ring-offset-0 focus:ring-primary-container" type="checkbox" />
-                <span className="text-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Remember this device</span>
-              </label>
-              {/* Login Button */}
-              <button 
-                className="w-full py-4 rounded-xl font-bold text-on-primary bg-gradient-to-r from-primary to-primary-container hover:shadow-[0_0_20px_rgba(128,131,255,0.4)] transition-all active:scale-[0.98] duration-200" 
-                type="submit"
-                onClick={() => navigate('/hr-dashboard')}
-              >
-                Login to Dashboard
-              </button>
-            </form>
-            {/* Divider */}
-            <div className="my-10 flex items-center gap-4">
-              <div className="h-[1px] flex-1 bg-outline-variant opacity-20"></div>
-              <span className="text-[10px] uppercase tracking-[0.1em] text-outline font-bold">Or continue with</span>
-              <div className="h-[1px] flex-1 bg-outline-variant opacity-20"></div>
+            <div className="space-y-2">
+              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Password</label>
+              <input 
+                type="password" 
+                placeholder="••••••••"
+                className="w-full bg-[#1a2236] border border-white/10 rounded-2xl p-5 text-white placeholder-slate-600 focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </div>
-            {/* Social Logins */}
-            <div className="grid grid-cols-2 gap-4">
-              <button className="flex items-center justify-center gap-2 py-3 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface transition-colors border border-outline-variant/10">
-                <img alt="Google Logo" className="w-5 h-5 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4qcG2CDf7hpT7RQRSzYiVEtRlq6sbalM7s05Vicx0xHEexBP_7p3fw6ApIEremNaOBVKdKYNwQpi47NnZrdSXnlhQGV98LE7Y_nWnGJti8Gj-PDSSqTw2bWhZmHJEAyGOFtQzyLJZ8oPdMKoaCN4C0gAqDdbNZSptzry2cCGEXTJ7azWUXTb4UhLPg14Mgpy1QZCk0Oe3Kqhi96IByXTRNvZJ1Y8kN7sTUNKPy8K4SuXDccPzWN4cSzq6v91-K5e5yT-ypbz1IQ" />
-                <span className="text-sm font-semibold">Google</span>
-              </button>
-              <button className="flex items-center justify-center gap-2 py-3 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface transition-colors border border-outline-variant/10">
-                <span className="material-symbols-outlined text-[20px]" data-icon="terminal" style={{ fontVariationSettings: "'FILL' 1" }}>terminal</span>
-                <span className="text-sm font-semibold">GitHub</span>
-              </button>
+            
+            <button 
+              type="submit"
+              className="w-full py-5 bg-gradient-to-r from-primary to-primary-container text-on-primary font-black rounded-2xl shadow-xl shadow-primary/20 hover:shadow-primary/40 active:scale-[0.98] transition-all"
+            >
+              Sign In to Portal
+            </button>
+          </form>
+
+          <div className="relative my-12">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-white/5"></div>
             </div>
-            {/* Demo Access */}
-            <div className="mt-8 p-4 rounded-xl bg-surface-container-lowest/50 border border-outline-variant/10">
-              <p className="text-[10px] uppercase tracking-[0.05em] font-bold text-on-surface-variant mb-3 text-center">Quick Demo Access</p>
-              <div className="flex flex-wrap justify-center gap-2">
-                <button className="px-3 py-1.5 rounded-full bg-surface-container-highest text-[10px] font-bold text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary-container transition-all">HR</button>
-                <button className="px-3 py-1.5 rounded-full bg-surface-container-highest text-[10px] font-bold text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary-container transition-all">Reviewer</button>
-                <button className="px-3 py-1.5 rounded-full bg-surface-container-highest text-[10px] font-bold text-primary-fixed-dim hover:bg-primary-container hover:text-on-primary-container transition-all">Trainer</button>
-              </div>
+            <div className="relative flex justify-center">
+              <span className="bg-[#0b1326] px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">Quick Portal Access</span>
             </div>
-            <div className="mt-8 text-center">
-              <p className="text-on-surface-variant text-sm font-medium">
-                Don't have an account? 
-                <button type="button" onClick={() => navigate('/register')} className="text-primary font-bold hover:underline underline-offset-4 ml-1">Sign up</button>
-              </p>
-            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <button 
+              onClick={() => navigate('/hr/upload')}
+              className="flex items-center justify-center gap-3 py-4 bg-[#1a2236] border border-white/10 rounded-2xl text-slate-400 font-bold text-xs hover:border-primary/50 hover:text-white transition-all shadow-lg active:scale-95"
+            >
+              <span className="material-symbols-outlined text-xl">corporate_fare</span>
+              HR Access
+            </button>
+            <button 
+              onClick={() => navigate('/trainer/dashboard')}
+              className="flex items-center justify-center gap-3 py-4 bg-[#1a2236] border border-white/10 rounded-2xl text-slate-400 font-bold text-xs hover:border-secondary/50 hover:text-white transition-all shadow-lg active:scale-95"
+            >
+              <span className="material-symbols-outlined text-xl">school</span>
+              Trainer Access
+            </button>
+          </div>
+
+          <div className="mt-12 pt-8 border-t border-white/5 flex flex-col items-center gap-4">
+             <div className="flex gap-6">
+                <button onClick={() => navigate('/register')} className="text-[10px] font-black uppercase tracking-widest text-slate-600 hover:text-white transition-colors">Create Account</button>
+                <button className="text-[10px] font-black uppercase tracking-widest text-slate-600 hover:text-white transition-colors">Support Portal</button>
+             </div>
+             <p className="text-[10px] text-slate-700 font-medium">By signing in, you agree to our System Policies.</p>
           </div>
         </div>
       </section>
