@@ -63,6 +63,17 @@
   body {
     @apply bg-surface-dim text-on-surface min-h-screen selection:bg-primary-container selection:text-on-primary-container font-inter;
   }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  * {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 }
 
 @layer utilities {
@@ -71,20 +82,25 @@
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
   }
+
   .timeline-gradient {
     background: linear-gradient(to bottom, var(--color-primary) 0%, var(--color-outline-variant) 100%);
   }
+
   .bg-gradient-brand {
     background: linear-gradient(135deg, #8083ff 0%, #6f00be 100%);
   }
+
   .text-glow {
     text-shadow: 0 0 20px rgba(192, 193, 255, 0.4);
   }
+
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
+
   .hero-gradient {
     background: radial-gradient(circle at top right, rgba(192, 193, 255, 0.15), transparent),
-                radial-gradient(circle at bottom left, rgba(128, 131, 255, 0.1), transparent);
+      radial-gradient(circle at bottom left, rgba(128, 131, 255, 0.1), transparent);
   }
 }
