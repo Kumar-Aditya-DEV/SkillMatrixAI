@@ -8,21 +8,32 @@ const Comment = require("../models/Comment");
 // ===============================
 const getDashboard = async (req, res) => {
   try {
+    // Identify orphaned roadmaps due to manual Candidate deletion
+    const allRoadmaps = await Roadmap.find({}).populate("candidateId", "_id");
+    const orphans = allRoadmaps.filter(r => !r.candidateId).map(r => r._id);
+    
+    // Automatically flush them out if they exist so database stays clean
+    if (orphans.length > 0) {
+      await Roadmap.deleteMany({ _id: { $in: orphans } });
+    }
+
+    // Compute stats only matching valid roadmaps. We query Candidate specifically to avoid double-counting 
+    // when a Candidate is marked COMPLETED but its Roadmap is still technically structured as PENDING/APPROVED.
     const [pending, approved, rejected, completed] = await Promise.all([
-      Roadmap.countDocuments({ status: "PENDING" }),
-      Roadmap.countDocuments({ status: "APPROVED" }),
-      Roadmap.countDocuments({ status: "REJECTED" }),
-      Candidate.countDocuments({ status: "COMPLETED" })
+      Candidate.countDocuments({ status: "PENDING", roadmapId: { $exists: true, $ne: null } }),
+      Candidate.countDocuments({ status: { $in: ["APPROVED", "IN TRAINING", "IN_PROGRESS", "IN REVIEW"] }, roadmapId: { $exists: true, $ne: null } }),
+      Candidate.countDocuments({ status: "REJECTED", roadmapId: { $exists: true, $ne: null } }),
+      Candidate.countDocuments({ status: "COMPLETED", roadmapId: { $exists: true, $ne: null } })
     ]);
 
-    const recentRoadmaps = await Roadmap.find({})
+    const recentRoadmaps = await Roadmap.find({ _id: { $nin: orphans } })
       .populate("candidateId", "name email roleApplied matchScore")
       .sort({ createdAt: -1 })
       .limit(20);
 
     res.json({
       stats: { pending, approved, rejected, completed },
-      roadmaps: recentRoadmaps
+      roadmaps: recentRoadmaps.filter(r => r.candidateId != null)
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

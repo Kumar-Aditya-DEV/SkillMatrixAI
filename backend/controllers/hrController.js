@@ -105,7 +105,7 @@ const uploadResume = async (req, res) => {
 
     const baseEmail = aiResponse.email || email;
     const uniqueEmail = baseEmail 
-      ? `${baseEmail.split('@')[0]}+${Date.now()}@${baseEmail.split('@')[1] || 'skillpath.ai'}` 
+      ? `${baseEmail.split('@')[0]}_${Date.now()}@${baseEmail.split('@')[1] || 'skillpath.ai'}` 
       : `candidate_${Date.now()}@skillpath.ai`;
 
     const candidate = await Candidate.create({
